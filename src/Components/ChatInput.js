@@ -20,6 +20,12 @@ const ChatInput = () => {
 	const [message, setMessage] = useState("");
 	const [isPickerOpen, setIsPickerOpen] = useState(false);
 
+	const addEmoji = emoji => {
+		setMessage(message + emoji.native);
+	};
+
+	console.log(message);
+
 	const handleSubmit = () => {
 		setMessage("");
 	};
@@ -45,7 +51,11 @@ const ChatInput = () => {
 						<ChatIcon className={dark ? "darkModeIcons" : ""}>
 							<EmojiPicker>
 								{isPickerOpen ? (
-									<Picker theme={dark ? "dark" : "light"} set={"apple"} />
+									<Picker
+										onClick={(emoji, e) => addEmoji(emoji)}
+										theme={dark ? "dark" : "light"}
+										set={"apple"}
+									/>
 								) : (
 									""
 								)}
