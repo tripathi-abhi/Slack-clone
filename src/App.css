@@ -8,19 +8,11 @@
 	cursor: pointer;
 }
 
-.darkTheme.chatContainer {
-	background-color: rgba(10, 10, 10, 0.933);
-}
-
-.darkTheme.channelName {
-	color: white;
-}
-
-.darkTheme.loginContainer {
+.darkLoginContainer {
 	background-color: rgba(10, 10, 10, 0.933);
 	color: white;
 }
 
-.darkTheme.loginContainer a {
+.darkLoginContainer a {
 	color: purple;
 }

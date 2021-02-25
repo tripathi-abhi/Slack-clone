@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
 	HeaderContainer,
 	MainHeader,
@@ -9,7 +9,7 @@ import {
 	UserName,
 	IconBox,
 	ToggleContainer,
-} from "./StyledComponents";
+} from "../StyledComponents/styledHeader";
 import darkModeConext from "../Context/DarkModeContext";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
@@ -23,15 +23,20 @@ const Header = () => {
 	const toggle = () => {
 		setDark(!dark);
 	};
+
+	useEffect(() => {
+		localStorage.setItem("darkTheme", dark);
+	}, [dark]);
+
 	return (
-		<HeaderContainer>
+		<HeaderContainer className={dark ? "darkHeader" : ""}>
 			<ToggleContainer onClick={toggle} className="cursor__pointer">
 				{dark ? <NightsStayOutlinedIcon /> : <WbSunnyOutlinedIcon />}
 			</ToggleContainer>
 			<MainHeader>
 				<AccessTimeIcon className="cursor__pointer" />
 				<SearchContainer>
-					<SearchBox>
+					<SearchBox className={dark ? "darkSearchBox" : ""}>
 						<IconBox>
 							<SearchIcon />
 						</IconBox>

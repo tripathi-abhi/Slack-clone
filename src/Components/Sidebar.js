@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
 	SidebarContainer,
 	WorkspaceContainer,
@@ -10,25 +10,47 @@ import {
 	NewChannelContainer,
 	ChannelList,
 	Channel,
-} from "./StyledComponents";
+} from "../StyledComponents/styledSidebar";
+import darkModeConext from "../Context/DarkModeContext";
 import AddIcon from "@material-ui/icons/Add";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import CreateIcon from "@material-ui/icons/Create";
 import { sidebarItemsData } from "../Utils/SidebarUtils";
-import { channelsData } from "../Utils/ChannelsUtils";
+import swal from "sweetalert";
+import db from "../firebase";
 import "../Assets/Sidebar.css";
 
-const Sidebar = () => {
+const Sidebar = ({ rooms }) => {
+	const { dark } = useContext(darkModeConext);
+
+	const addChannel = async () => {
+		const name = await swal("Enter channel name", {
+			content: "input",
+			button: {
+				text: "Add Room",
+			},
+		});
+		if (name) {
+			db.collection("rooms").add({
+				name,
+			});
+		}
+	};
+
 	return (
-		<SidebarContainer>
+		<SidebarContainer className={dark ? "darkSidebar" : ""}>
 			<WorkspaceContainer>
 				<WorkspaceName>Clever Programmer</WorkspaceName>
-				<NewMessageButton>
-					<AddCircleOutlineIcon className="cursor__pointer" />
+				<NewMessageButton
+					className={
+						dark ? "darkNewMessageButton cursor__pointer" : "cursor__pointer"
+					}
+				>
+					<CreateIcon className="cursor__pointer" />
 				</NewMessageButton>
 			</WorkspaceContainer>
 			<MainChannels>
-				{sidebarItemsData.map(item => (
-					<MainChannelItems className="cursor__pointer">
+				{sidebarItemsData.map((item, index) => (
+					<MainChannelItems key={index} className="cursor__pointer">
 						{item.icon}
 						{item.text}
 					</MainChannelItems>
@@ -37,12 +59,19 @@ const Sidebar = () => {
 			<ChannelsContainer>
 				<NewChannelContainer>
 					<div>Channels</div>
-					<AddIcon className="addIcon cursor__pointer" />
+					<AddIcon
+						className={
+							dark
+								? "darkAddIcon addIcon cursor__pointer"
+								: "addIcon cursor__pointer"
+						}
+						onClick={addChannel}
+					/>
 				</NewChannelContainer>
 				<ChannelList>
-					{channelsData.map(channel => (
-						<Channel className="cursor__pointer">
-							# {channel?.channelName}
+					{rooms.map(room => (
+						<Channel key={room.id} className="cursor__pointer">
+							# {room?.data.name}
 						</Channel>
 					))}
 				</ChannelList>

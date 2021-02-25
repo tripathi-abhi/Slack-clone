@@ -1,37 +1,39 @@
 import React, { useContext } from "react";
 import {
 	ChatContainer,
-	ChatChannelContainer,
+	ChatHeader,
 	ChannelDetails,
 	MoreDetails,
 	ChannelName,
-	ChannelHeading,
-} from "./StyledComponents";
+	ChannelInfo,
+	Info,
+} from "../StyledComponents/styledChat";
+import ChatInput from "./ChatInput";
+import ChatMessageContainer from "./ChatMessage";
 import darkModeConext from "../Context/DarkModeContext";
-import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
 import StarBorderOutlinedIcon from "@material-ui/icons/StarBorderOutlined";
 
 const Chat = () => {
 	const { dark } = useContext(darkModeConext);
 	return (
-		<ChatContainer
-			className={dark ? "darkTheme chatContainer" : "chatContainer"}
-		>
-			<ChatChannelContainer>
+		<ChatContainer className={dark ? "darkChatContainer" : ""}>
+			<ChatHeader className={dark ? "darkChatHeader" : ""}>
 				<ChannelDetails>
-					<ChannelName
-						className={dark ? "darkTheme channelName" : "channelName"}
-					>
-						<h3># General</h3>
-						<StarBorderOutlinedIcon />
+					<ChannelName className={dark ? "darkChannelName" : ""}>
+						<p># General</p>
+						<StarBorderOutlinedIcon className="cursor__pointer" />
 					</ChannelName>
-					<ChannelHeading>Welcome to General Channel</ChannelHeading>
+					<ChannelInfo className={dark ? "darkChatText" : ""}>
+						Welcome to General Channel
+					</ChannelInfo>
 				</ChannelDetails>
-				<MoreDetails>
+				<MoreDetails className={dark ? "darkChatText" : ""}>
 					Details
-					<InfoOutlinedIcon />
+					<Info />
 				</MoreDetails>
-			</ChatChannelContainer>
+			</ChatHeader>
+			<ChatMessageContainer />
+			<ChatInput />
 		</ChatContainer>
 	);
 };
