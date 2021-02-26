@@ -102,7 +102,7 @@ const Chat = ({ user }) => {
 						/>
 					))}
 			</MessagesContainer>
-			<ChatInput sendMessage={sendMessage} />
+			{channel ? <ChatInput sendMessage={sendMessage} /> : ""}
 		</ChatContainer>
 	);
 };

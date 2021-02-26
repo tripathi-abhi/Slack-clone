@@ -142,7 +142,7 @@ const Sidebar = ({ rooms }) => {
 										checked={star}
 										onChange={e => setStar(e.target.checked)}
 									></input>
-									<label for="vehicle1"> I have a bike</label>
+									<label for="vehicle1">Mark this as starred channel</label>
 								</div>
 								<button
 									className="modalButton"
