@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "emoji-mart/css/emoji-mart.css";
 import "./App.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Chat from "./Components/Chat";
 import Login from "./Components/Login";
 import Header from "./Components/Header";
 import Sidebar from "./Components/Sidebar";
+import Features from "./Components/Features";
 import { Container, Main } from "./Components/StyledComponents";
+import { auth } from "./firebase";
 import darkModeContext from "./Context/DarkModeContext.js";
 import db from "./firebase";
 
 function App() {
 	const [dark, setDark] = useState(
 		localStorage.getItem("darkTheme") === "true" || false
+	);
+	const [user, setUser] = useState(
+		JSON.parse(localStorage.getItem("currentUser"))
 	);
 
 	const [rooms, setRooms] = useState([]);
@@ -30,31 +35,42 @@ function App() {
 		});
 	};
 
+	const signOut = async () => {
+		try {
+			await auth.signOut();
+			localStorage.removeItem("currentUser");
+			setUser(null);
+		} catch (err) {
+			alert(err.message);
+		}
+	};
+
 	useEffect(() => {
 		getChannels();
 	}, []);
-
-	console.log(rooms);
 
 	return (
 		<darkModeContext.Provider value={{ dark, setDark }}>
 			<div className="App">
 				<Router>
-					<Container>
-						<Header />
-						<Main>
-							<Sidebar rooms={rooms} />
-							<Switch>
-								<Route path="/room">
-									<Chat />
-								</Route>
-								<Route path="/">
-									<Login />
-								</Route>
-								{/* <Redirect>Login Page</Redirect> */}
-							</Switch>
-						</Main>
-					</Container>
+					{!user ? (
+						<Login setUser={setUser} />
+					) : (
+						<Container>
+							<Header signOut={signOut} user={user} />
+							<Main>
+								<Sidebar rooms={rooms} />
+								<Switch>
+									<Route path="/room/:channelId">
+										<Chat user={user} />
+									</Route>
+									<Route path="/">
+										<Features />
+									</Route>
+								</Switch>
+							</Main>
+						</Container>
+					)}
 				</Router>
 			</div>
 		</darkModeContext.Provider>

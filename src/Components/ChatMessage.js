@@ -9,29 +9,22 @@ import {
 	SingleMessageContainer,
 } from "../StyledComponents/styledChatMessage";
 
-const ChatMessage = () => {
+const ChatMessage = ({ text, name, image, time }) => {
 	const { dark } = useContext(darkModeContext);
 	return (
-		<MessageContainer>
-			<SingleMessageContainer
-				className={dark ? "darkSingleMessageContainer" : ""}
-			>
-				<UserChatAvatar>
-					<img
-						src="https://randomuser.me/api/portraits/women/64.jpg"
-						alt="chatUserImg"
-					/>
-				</UserChatAvatar>
-				<MessageContent>
-					<Name className={dark ? "darkChatText" : ""}>
-						Abhishek <span>2/23/2021 1:25:15 AM</span>
-					</Name>
-					<Text className={dark ? "darkChatText" : ""}>
-						Let's get going dude!
-					</Text>
-				</MessageContent>
-			</SingleMessageContainer>
-		</MessageContainer>
+		<SingleMessageContainer
+			className={dark ? "darkSingleMessageContainer" : ""}
+		>
+			<UserChatAvatar>
+				<img src={image} alt="chatUserImg" />
+			</UserChatAvatar>
+			<MessageContent>
+				<Name className={dark ? "darkChatText" : ""}>
+					{name} <span>{new Date(time.toDate()).toUTCString()}</span>
+				</Name>
+				<Text className={dark ? "darkChatText" : ""}>{text}</Text>
+			</MessageContent>
+		</SingleMessageContainer>
 	);
 };
 

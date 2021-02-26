@@ -5,6 +5,7 @@ export const ChatContainer = styled.div`
 	display: grid;
 	grid-template-rows: 64px auto min-content;
 	transition: all 0.75s ease-in-out;
+	min-height: 0;
 	.darkChatHeader {
 		border-bottom: 1px solid rgba(151, 76, 151, 0.13);
 	}
@@ -55,4 +56,18 @@ export const MoreDetails = styled.div`
 
 export const Info = styled(InfoOutlinedIcon)`
 	margin-left: 10px;
+`;
+
+export const MessagesContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	overflow-y: scroll;
+	::-webkit-scrollbar {
+		display: none;
+	}
+	.darkSingleMessageContainer {
+		:hover {
+			background-color: rgba(34, 34, 34);
+		}
+	}
 `;

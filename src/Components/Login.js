@@ -1,15 +1,42 @@
 import React, { useContext } from "react";
+import { auth, provider } from "../firebase";
 import darkModeConext from "../Context/DarkModeContext";
-import { LoginContainer } from "../StyledComponents/styledLogin";
+import {
+	LoginContainer,
+	SlackImg,
+	LoginContent,
+	SignInButton,
+} from "../StyledComponents/styledLogin";
 
-const Login = () => {
+const Login = ({ setUser }) => {
 	const { dark } = useContext(darkModeConext);
+
+	const signIn = async () => {
+		try {
+			const result = await auth.signInWithPopup(provider);
+			const newUser = {
+				name: result.user.displayName,
+				image: result.user.photoURL,
+			};
+			localStorage.setItem("currentUser", JSON.stringify(newUser));
+			setUser(newUser);
+		} catch (err) {
+			alert(err.message);
+		}
+	};
+
 	return (
-		<LoginContainer className={dark ? "darkLoginContainer" : "loginContainer"}>
-			<h1>LOGIN</h1>
-			<p>
-				Click <a href="/room">here</a> to see my channel room.
-			</p>
+		<LoginContainer>
+			<LoginContent>
+				<SlackImg
+					src="https://stormotion.io/blog/content/images/2018/12/developer.gif"
+					alt="slack__img"
+				/>
+				<h1>Welcome To My Slack</h1>
+				<SignInButton onClick={signIn} className="cursor__pointer">
+					Sign In With Google
+				</SignInButton>
+			</LoginContent>
 		</LoginContainer>
 	);
 };

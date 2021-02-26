@@ -62,6 +62,9 @@ export const UserContainer = styled.div`
 	padding-right: 16px;
 	/* position: absolute; */
 	/* right: 0; */
+	.openMenu {
+		display: block;
+	}
 `;
 
 export const UserName = styled.div`

@@ -36,12 +36,23 @@ export const InputContainer = styled.div`
 			color: #80808e;
 			background-color: transparent;
 		}
+		.shiftIconContainer {
+			transform: translatey(2.67rem);
+		}
+	}
+	.darkDiv {
+		background-color: transparent;
+	}
+	.shiftInputDiv {
+		height: 42px;
 	}
 `;
 
 export const IconsContainer = styled.div`
 	display: flex;
 	color: rgba(28, 29, 28, 0.7);
+	align-items: center;
+	transition: all 0.35s;
 	.darkModeIcons {
 		color: #a934a9;
 		:hover {
@@ -53,10 +64,11 @@ export const IconsContainer = styled.div`
 
 export const ChatIcon = styled.div`
 	padding: 5px;
-	transition: all 0.5s;
+	transition: all 0.3s;
+	border-radius: 3px;
 	:hover {
 		color: rgba(28, 29, 28, 1);
-		background-color: rgba(28, 29, 28, 0.1);
+		background-color: rgba(17, 17, 17, 0.2);
 	}
 `;
 

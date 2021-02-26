@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
 	SidebarContainer,
 	WorkspaceContainer,
@@ -10,30 +11,62 @@ import {
 	NewChannelContainer,
 	ChannelList,
 	Channel,
+	ModalBody,
+	Form,
 } from "../StyledComponents/styledSidebar";
 import darkModeConext from "../Context/DarkModeContext";
 import AddIcon from "@material-ui/icons/Add";
 import CreateIcon from "@material-ui/icons/Create";
 import { sidebarItemsData } from "../Utils/SidebarUtils";
-import swal from "sweetalert";
+import CloseIcon from "@material-ui/icons/Close";
+import ReactModal from "react-modal";
 import db from "../firebase";
 import "../Assets/Sidebar.css";
 
 const Sidebar = ({ rooms }) => {
 	const { dark } = useContext(darkModeConext);
+	const [showModal, setShowModal] = useState(false);
+	const [channelName, setChannelName] = useState("");
+	const [channelDescription, setChannelDescription] = useState("");
 
-	const addChannel = async () => {
-		const name = await swal("Enter channel name", {
-			content: "input",
-			button: {
-				text: "Add Room",
-			},
-		});
-		if (name) {
-			db.collection("rooms").add({
-				name,
-			});
+	const history = useHistory();
+
+	const addChannel = async e => {
+		e.preventDefault();
+		setShowModal(false);
+		if (channelName && channelDescription) {
+			try {
+				await db.collection("rooms").add({
+					name: channelName,
+					description: channelDescription,
+				});
+			} catch (err) {
+				alert(err.message);
+			}
+		} else {
+			alert(
+				`Please enter ${channelName ? "channel description" : "channel name"}`
+			);
 		}
+		setChannelName("");
+		setChannelDescription("");
+	};
+
+	const gotoChannel = id => {
+		if (id) {
+			history.push(`/room/${id}`);
+		}
+	};
+
+	const customStyles = {
+		content: {
+			top: "50%",
+			left: "50%",
+			right: "auto",
+			bottom: "auto",
+			marginRight: "-50%",
+			transform: "translate(-50%, -50%)",
+		},
 	};
 
 	return (
@@ -65,12 +98,52 @@ const Sidebar = ({ rooms }) => {
 								? "darkAddIcon addIcon cursor__pointer"
 								: "addIcon cursor__pointer"
 						}
-						onClick={addChannel}
+						onClick={() => setShowModal(true)}
 					/>
+					<ReactModal
+						style={customStyles}
+						isOpen={showModal}
+						contentLabel="Minimal Modal Example"
+					>
+						<ModalBody>
+							<h2>Create New Channel</h2>
+							<Form>
+								<input
+									type="text"
+									value={channelName}
+									onChange={e => setChannelName(e.target.value)}
+									placeholder="Name"
+								/>
+								<input
+									type="text"
+									value={channelDescription}
+									onChange={e => setChannelDescription(e.target.value)}
+									placeholder="Description"
+								/>
+								<button
+									className="modalButton"
+									type="submit"
+									onClick={addChannel}
+								>
+									Add Channel
+								</button>
+							</Form>
+							<div
+								className="closeModalButton"
+								onClick={() => setShowModal(false)}
+							>
+								<CloseIcon />
+							</div>
+						</ModalBody>
+					</ReactModal>
 				</NewChannelContainer>
 				<ChannelList>
 					{rooms.map(room => (
-						<Channel key={room.id} className="cursor__pointer">
+						<Channel
+							onClick={() => gotoChannel(room.id)}
+							key={room.id}
+							className="cursor__pointer"
+						>
 							# {room?.data.name}
 						</Channel>
 					))}
@@ -81,3 +154,14 @@ const Sidebar = ({ rooms }) => {
 };
 
 export default Sidebar;
+
+// import { useState } from "react";
+// const ExampleApp = () => {
+
+// 	return (
+// 		<div>
+// 			<button onClick={() => setShowModal(true)}>Trigger Modal</button>
+
+// 		</div>
+// 	);
+// };

@@ -1,19 +1,13 @@
 import styled from "styled-components";
 
-export const MessageContainer = styled.div`
-	.darkSingleMessageContainer {
-		:hover {
-			background-color: rgba(34, 34, 34);
-		}
-	}
-`;
+export const MessageContainer = styled.div``;
 
 export const SingleMessageContainer = styled.div`
-	padding: 8px 20px;
+	padding: 10px 20px;
 	display: flex;
 	align-items: center;
 	height: min-content;
-	transition: all 0.4s;
+	transition: all 0.2s;
 	:hover {
 		background-color: rgba(248, 248, 248, 1);
 	}
