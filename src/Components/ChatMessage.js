@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import darkModeContext from "../Context/DarkModeContext";
 import {
-	MessageContainer,
 	UserChatAvatar,
 	MessageContent,
 	Name,

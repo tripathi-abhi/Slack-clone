@@ -120,6 +120,9 @@ const FeatureList = styled.div`
 	justify-content: space-between;
 	overflow-x: hidden;
 	overflow-y: scroll;
+	::-webkit-scrollbar {
+		display: none;
+	}
 
 	.darkFeatureCard {
 		background-color: #242424;

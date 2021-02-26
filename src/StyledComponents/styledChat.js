@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import InfoOutlinedIcon from "@material-ui/icons/InfoOutlined";
+import { Link } from "react-router-dom";
 
 export const ChatContainer = styled.div`
 	display: grid;
@@ -20,7 +21,6 @@ export const ChatHeader = styled.div`
 	align-items: center;
 	padding: 20px;
 	border-bottom: 1px solid rgba(112, 67, 112, 0.13);
-
 	.darkChatText {
 		color: #b5aeae;
 	}
@@ -36,6 +36,12 @@ export const ChannelName = styled.div`
 	p {
 		font-weight: 700;
 		margin-right: 10px;
+	}
+	.nostar {
+		display: none;
+	}
+	.starChannel {
+		display: block;
 	}
 `;
 
@@ -70,4 +76,11 @@ export const MessagesContainer = styled.div`
 			background-color: rgba(34, 34, 34);
 		}
 	}
+`;
+
+export const StyledLink = styled(Link)`
+	margin-bottom: -4px;
+	padding: 0;
+	color: inherit;
+	cursor: pointer;
 `;

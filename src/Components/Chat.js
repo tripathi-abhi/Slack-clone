@@ -8,6 +8,7 @@ import {
 	ChannelInfo,
 	Info,
 	MessagesContainer,
+	StyledLink,
 } from "../StyledComponents/styledChat";
 import ChatInput from "./ChatInput";
 import ChatMessageContainer from "./ChatMessage";
@@ -64,8 +65,19 @@ const Chat = ({ user }) => {
 			<ChatHeader className={dark ? "darkChatHeader" : ""}>
 				<ChannelDetails>
 					<ChannelName className={dark ? "darkChannelName" : ""}>
-						<p># {channel && channel.name}</p>
-						<StarBorderOutlinedIcon className="cursor__pointer" />
+						<p>
+							{" "}
+							{channel
+								? `# ${channel.name}`
+								: "Try using / adding a new channel"}
+						</p>
+						<StarBorderOutlinedIcon
+							className={
+								channel?.star
+									? "starChannel cursor__pointer"
+									: "cursor__pointer nostar"
+							}
+						/>
 					</ChannelName>
 					<ChannelInfo className={dark ? "darkChatText" : ""}>
 						{channel && channel?.description}
@@ -73,7 +85,9 @@ const Chat = ({ user }) => {
 				</ChannelDetails>
 				<MoreDetails className={dark ? "darkChatText" : ""}>
 					Details
-					<Info />
+					<StyledLink to="/room">
+						<Info className="cursor__pointer" />
+					</StyledLink>
 				</MoreDetails>
 			</ChatHeader>
 			<MessagesContainer>

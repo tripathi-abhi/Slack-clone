@@ -78,8 +78,15 @@ export const Channel = styled.div`
 	display: flex;
 	align-items: center;
 	padding-left: 19px;
+	.deleteRoomButton {
+		opacity: 0;
+		transition: all 0.2s;
+	}
 	:hover {
 		background-color: rgb(52, 14, 54);
+		.deleteRoomButton {
+			opacity: 1;
+		}
 	}
 `;
 
@@ -89,7 +96,7 @@ export const Form = styled.form`
 	justify-content: center;
 	align-items: center;
 	width: 300px;
-	input {
+	> input {
 		height: 30px;
 		width: 90%;
 		margin: 10px;
@@ -122,6 +129,15 @@ export const Form = styled.form`
 		}
 		:focus {
 			outline: none;
+		}
+	}
+
+	.modalCheckbox {
+		display: flex;
+		align-items: center;
+		margin-top: 10px;
+		input {
+			margin-right: 7px;
 		}
 	}
 `;

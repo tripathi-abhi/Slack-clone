@@ -15,6 +15,7 @@ import {
 	Form,
 } from "../StyledComponents/styledSidebar";
 import darkModeConext from "../Context/DarkModeContext";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import AddIcon from "@material-ui/icons/Add";
 import CreateIcon from "@material-ui/icons/Create";
 import { sidebarItemsData } from "../Utils/SidebarUtils";
@@ -28,10 +29,12 @@ const Sidebar = ({ rooms }) => {
 	const [showModal, setShowModal] = useState(false);
 	const [channelName, setChannelName] = useState("");
 	const [channelDescription, setChannelDescription] = useState("");
+	const [star, setStar] = useState(false);
 
 	const history = useHistory();
 
 	const addChannel = async e => {
+		console.log(star);
 		e.preventDefault();
 		setShowModal(false);
 		if (channelName && channelDescription) {
@@ -39,6 +42,7 @@ const Sidebar = ({ rooms }) => {
 				await db.collection("rooms").add({
 					name: channelName,
 					description: channelDescription,
+					star: star,
 				});
 			} catch (err) {
 				alert(err.message);
@@ -50,6 +54,15 @@ const Sidebar = ({ rooms }) => {
 		}
 		setChannelName("");
 		setChannelDescription("");
+		setStar(false);
+	};
+
+	const deleteChannel = async id => {
+		try {
+			await db.collection("rooms").doc(id).delete();
+		} catch (err) {
+			alert(err.message);
+		}
 	};
 
 	const gotoChannel = id => {
@@ -59,6 +72,9 @@ const Sidebar = ({ rooms }) => {
 	};
 
 	const customStyles = {
+		overlay: {
+			background: "rgba(0,0,0,0.6)",
+		},
 		content: {
 			top: "50%",
 			left: "50%",
@@ -120,6 +136,14 @@ const Sidebar = ({ rooms }) => {
 									onChange={e => setChannelDescription(e.target.value)}
 									placeholder="Description"
 								/>
+								<div className="modalCheckbox">
+									<input
+										type="checkbox"
+										checked={star}
+										onChange={e => setStar(e.target.checked)}
+									></input>
+									<label for="vehicle1"> I have a bike</label>
+								</div>
 								<button
 									className="modalButton"
 									type="submit"
@@ -145,6 +169,11 @@ const Sidebar = ({ rooms }) => {
 							className="cursor__pointer"
 						>
 							# {room?.data.name}
+							<DeleteForeverIcon
+								className="deleteRoomButton"
+								onClick={() => deleteChannel(room.id)}
+								style={{ margin: "0 19px 0 auto" }}
+							/>
 						</Channel>
 					))}
 				</ChannelList>
@@ -154,14 +183,3 @@ const Sidebar = ({ rooms }) => {
 };
 
 export default Sidebar;
-
-// import { useState } from "react";
-// const ExampleApp = () => {
-
-// 	return (
-// 		<div>
-// 			<button onClick={() => setShowModal(true)}>Trigger Modal</button>
-
-// 		</div>
-// 	);
-// };

@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
+import React from "react";
 import { auth, provider } from "../firebase";
-import darkModeConext from "../Context/DarkModeContext";
 import {
 	LoginContainer,
 	SlackImg,
@@ -9,8 +8,6 @@ import {
 } from "../StyledComponents/styledLogin";
 
 const Login = ({ setUser }) => {
-	const { dark } = useContext(darkModeConext);
-
 	const signIn = async () => {
 		try {
 			const result = await auth.signInWithPopup(provider);
