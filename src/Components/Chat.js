@@ -90,18 +90,22 @@ const Chat = ({ user }) => {
 					</StyledLink>
 				</MoreDetails>
 			</ChatHeader>
-			<MessagesContainer>
-				{messages?.length > 0 &&
-					messages.map(message => (
-						<ChatMessageContainer
-							key={message.id}
-							text={message.text}
-							name={message.user}
-							image={message.userImage}
-							time={message.timeStamp}
-						/>
-					))}
-			</MessagesContainer>
+			{channel ? (
+				<MessagesContainer>
+					{messages?.length > 0 &&
+						messages.map(message => (
+							<ChatMessageContainer
+								key={message.id}
+								text={message.text}
+								name={message.user}
+								image={message.userImage}
+								time={message.timeStamp}
+							/>
+						))}
+				</MessagesContainer>
+			) : (
+				""
+			)}
 			{channel ? <ChatInput sendMessage={sendMessage} /> : ""}
 		</ChatContainer>
 	);

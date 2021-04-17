@@ -14,6 +14,7 @@ import {
 	ModalBody,
 	Form,
 } from "../StyledComponents/styledSidebar";
+import { ToastContainer, toast } from "react-toastify";
 import darkModeConext from "../Context/DarkModeContext";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import AddIcon from "@material-ui/icons/Add";
@@ -22,6 +23,7 @@ import { sidebarItemsData } from "../Utils/SidebarUtils";
 import CloseIcon from "@material-ui/icons/Close";
 import ReactModal from "react-modal";
 import db from "../firebase";
+import "react-toastify/dist/ReactToastify.css";
 import "../Assets/Sidebar.css";
 
 const Sidebar = ({ rooms }) => {
@@ -44,11 +46,12 @@ const Sidebar = ({ rooms }) => {
 					description: channelDescription,
 					star: star,
 				});
+				toast.info("Channel added");
 			} catch (err) {
-				alert(err.message);
+				toast.error(err.message);
 			}
 		} else {
-			alert(
+			toast.error(
 				`Please enter ${channelName ? "channel description" : "channel name"}`
 			);
 		}
@@ -86,7 +89,8 @@ const Sidebar = ({ rooms }) => {
 	};
 
 	return (
-		<SidebarContainer className={dark ? "darkSidebar" : ""}>
+		<SidebarContainer className={dark ? "darkSidebar sidebar" : "sidebar"}>
+			<ToastContainer autoClose={3000} hideProgressBar={true} />
 			<WorkspaceContainer>
 				<WorkspaceName>Clever Programmer</WorkspaceName>
 				<NewMessageButton

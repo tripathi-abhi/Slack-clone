@@ -8,10 +8,11 @@ import {
 	SingleMessageContainer,
 } from "../StyledComponents/styledChatMessage";
 
-const ChatMessage = ({ text, name, image, time }) => {
+const ChatMessage = ({ key, text, name, image, time }) => {
 	const { dark } = useContext(darkModeContext);
 	return (
 		<SingleMessageContainer
+			key={key}
 			className={dark ? "darkSingleMessageContainer" : ""}
 		>
 			<UserChatAvatar>

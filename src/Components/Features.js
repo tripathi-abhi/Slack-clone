@@ -26,7 +26,7 @@ const Features = () => {
 			</FeatureHeader>
 			<FeatureList>
 				{FeaturesData.map((feature, index) => (
-					<FeatureCard key={index}>
+					<FeatureCard className="featureCard" key={index}>
 						<CardSide
 							className={
 								dark
@@ -117,7 +117,7 @@ const FeatureList = styled.div`
 	padding: 20px;
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	::-webkit-scrollbar {
@@ -140,11 +140,12 @@ const FeatureCard = styled.div`
 	perspective: 150rem;
 	-moz-perspective: 150rem;
 	position: relative;
-	width: 32%;
-	min-width: 250px;
+	width: 30%;
+	min-width: 330px;
 	height: 300px;
 	margin-bottom: 20px;
 	cursor: pointer;
+	margin: 10px;
 
 	.cardside {
 		width: 100%;
@@ -181,6 +182,7 @@ const CardSide = styled.div`
 `;
 
 const CardImg = styled.img`
+	max-height: 250px;
 	flex: 1;
 	padding: 10px 10px 0;
 	border-radius: 10px;
